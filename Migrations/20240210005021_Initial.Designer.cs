@@ -8,8 +8,8 @@ using ProjetoFullStack.Data;
 namespace ProjetoFullStack.Migrations
 {
     [DbContext(typeof(PFSDBContext))]
-    [Migration("20240208090404_InitialDb")]
-    partial class InitialDb
+    [Migration("20240210005021_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -17,7 +17,7 @@ namespace ProjetoFullStack.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("ProjetoFullStack.Models.ClienteModel", b =>
+            modelBuilder.Entity("ProjetoFullStack.Domain.Models.ClienteModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace ProjetoFullStack.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("EnderecoId")
+                    b.Property<int>("EnderecoModelId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nome")
@@ -43,12 +43,10 @@ namespace ProjetoFullStack.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnderecoId");
-
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("ProjetoFullStack.Models.EnderecoModel", b =>
+            modelBuilder.Entity("ProjetoFullStack.Domain.Models.EnderecoModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,6 +56,10 @@ namespace ProjetoFullStack.Migrations
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ClienteModelId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ClienteModelId");
 
                     b.Property<string>("NomeDaRua")
                         .IsRequired()
@@ -70,17 +72,25 @@ namespace ProjetoFullStack.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClienteModelId")
+                        .IsUnique();
+
                     b.ToTable("Enderecos");
                 });
 
-            modelBuilder.Entity("ProjetoFullStack.Models.ClienteModel", b =>
+            modelBuilder.Entity("ProjetoFullStack.Domain.Models.EnderecoModel", b =>
                 {
-                    b.HasOne("ProjetoFullStack.Models.EnderecoModel", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
+                    b.HasOne("ProjetoFullStack.Domain.Models.ClienteModel", "Cliente")
+                        .WithOne("Endereco")
+                        .HasForeignKey("ProjetoFullStack.Domain.Models.EnderecoModel", "ClienteModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("ProjetoFullStack.Domain.Models.ClienteModel", b =>
+                {
                     b.Navigation("Endereco");
                 });
 #pragma warning restore 612, 618

@@ -1,21 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoFullStack.Data;
-using ProjetoFullStack.Models;
+using ProjetoFullStack.Domain.Models;
 using ProjetoFullStack.Repositorios.Interfaces;
+using ProjetoFullStack.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ProjetoFullStack.Repositorios {
+namespace ProjetoFullStack.Repositorios
+{
     public class ClienteRepositorio : IClienteRepositorio {
         private readonly PFSDBContext _context;
-        public ClienteRepositorio(PFSDBContext pfsDBContext)
-        {
+        public ClienteRepositorio(PFSDBContext pfsDBContext) {
             _context = pfsDBContext;
         }
         public async Task<List<ClienteModel>> BuscarTodosClientes() {
 
-            return await _context.Clientes.ToListAsync(); // Método de buscar a lista toda dos Clientes!
+            return await _context.Clientes.Include(x => x.Endereco).ToListAsync(); // Método de buscar a lista dos Clientes!
         }
         public async Task<ClienteModel> BuscarClientePorId(int id) {
             return await _context.Clientes.FirstOrDefaultAsync(x => x.Id == id); // método lambda para criar uma condiçao!!
@@ -26,10 +27,10 @@ namespace ProjetoFullStack.Repositorios {
 
             return cliente;
         }
-        public async Task<ClienteModel> AtualizarCliente(ClienteModel cliente, int id) {
+            public async Task<ClienteModel> AtualizarCliente(ClienteModel cliente, int id) {
             var clienteId = await BuscarClientePorId(id); // método para buscar pelo Id do cliente para ocorrer a atualizaçao nos prox passos!
 
-            if(clienteId != null) {
+            if (clienteId != null) {
                 throw new Exception($"Cliente Para o ID:{id} não foi encontrado");
             }
 
@@ -45,7 +46,7 @@ namespace ProjetoFullStack.Repositorios {
         }
 
         public async Task<bool> DeletarCliente(int id) {
-            var clienteId = await BuscarClientePorId(id); 
+            var clienteId = await BuscarClientePorId(id);
 
             if (clienteId != null) {
                 throw new Exception($"Cliente Para o ID:{id} não foi encontrado");

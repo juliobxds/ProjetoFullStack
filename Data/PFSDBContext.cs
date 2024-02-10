@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoFullStack.Data.Map;
-using ProjetoFullStack.Models;
+using ProjetoFullStack.Domain.Models;
 
-namespace ProjetoFullStack.Data {
+namespace ProjetoFullStack.Data
+{
     public class PFSDBContext : DbContext {
 
         public PFSDBContext(DbContextOptions<PFSDBContext> options)

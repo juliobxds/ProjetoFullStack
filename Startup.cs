@@ -34,6 +34,7 @@ namespace ProjetoFullStack
 
 
             services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
+            services.AddScoped<IEnderecoRepositorio, EnderecoRepositorio>();
 
 
             services.AddControllers();

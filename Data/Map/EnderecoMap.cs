@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProjetoFullStack.Models;
+using ProjetoFullStack.Domain.Models;
 
-namespace ProjetoFullStack.Data.Map {
+namespace ProjetoFullStack.Data.Map
+{
     public class EnderecoMap : IEntityTypeConfiguration<EnderecoModel> {
         public void Configure(EntityTypeBuilder<EnderecoModel> builder) {
             
@@ -10,6 +11,7 @@ namespace ProjetoFullStack.Data.Map {
             builder.Property(e => e.NomeDaRua).IsRequired().HasMaxLength(256);
             builder.Property(e => e.NumeroDaRua).IsRequired();
             builder.Property(e => e.Bairro).IsRequired().HasMaxLength(256);
+            builder.Property(e => e.ClienteModelId).HasColumnName("ClienteModelId");
         }
     }
 }
