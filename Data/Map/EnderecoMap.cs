@@ -11,7 +11,7 @@ namespace ProjetoFullStack.Data.Map
             builder.Property(e => e.NomeDaRua).IsRequired().HasMaxLength(256);
             builder.Property(e => e.NumeroDaRua).IsRequired();
             builder.Property(e => e.Bairro).IsRequired().HasMaxLength(256);
-            builder.Property(e => e.ClienteModelId).HasColumnName("ClienteModelId");
+            builder.Property(e => e.ClienteModelId).HasColumnName("IdCliente");
         }
     }
 }

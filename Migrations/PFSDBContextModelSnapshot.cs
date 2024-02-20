@@ -57,7 +57,7 @@ namespace ProjetoFullStack.Migrations
 
                     b.Property<int>("ClienteModelId")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("ClienteModelId");
+                        .HasColumnName("IdCliente");
 
                     b.Property<string>("NomeDaRua")
                         .IsRequired()

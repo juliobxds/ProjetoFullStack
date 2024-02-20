@@ -1,10 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query;
 using ProjetoFullStack.Domain.DTOS;
 using ProjetoFullStack.Domain.Models;
-using ProjetoFullStack.Repositorios;
 using ProjetoFullStack.Repositorios.Interfaces;
-using ProjetoFullStack.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,26 +13,36 @@ namespace ProjetoFullStack.Controllers {
         private readonly IClienteRepositorio clienteRepositorio;
         public ClienteController(IClienteRepositorio clienteRepositorio) {
             this.clienteRepositorio = clienteRepositorio;
+
         }
         [HttpGet("TodosClientes")]
-        public async Task<ActionResult<List<ClienteModel>>> BuscarTodosClientes() {
-            List<ClienteModel> clientes = await clienteRepositorio.BuscarTodosClientes();
+        public async Task<ActionResult<List<ClienteDto>>> BuscarTodosClientes() {
+            List<ClienteDto> clientes = await clienteRepositorio.BuscarTodosClientes();
             return Ok(clientes);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<ClienteModel>> BuscarPorId(int id) {
+        [HttpGet("Id")]
+        public async Task<ActionResult<ClienteDto>> BuscarPorId(int id) {
+            ClienteDto cliente = await clienteRepositorio.BuscarClientePorId(id);
+            return Ok(cliente);
+        }
+        [HttpPost("Adicionar")]
+        public async Task<ActionResult<ClienteDto>> Adicionar([FromBody] ClienteDto cliente) {
+            var clienteAdd = await clienteRepositorio.AdicionarCliente(cliente);
+            return Ok(clienteAdd);
+        }
 
-            ClienteModel cliente = await clienteRepositorio.BuscarClientePorId(id);
+        [HttpPut("Atualizar")]
+        public async Task<ActionResult<ClienteDto>> Atualizar([FromBody] ClienteDto cliente, int id) {
+            ClienteModel clienteAtt = await clienteRepositorio.AtualizarCliente(cliente, id);
             return Ok(cliente);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AdicionarCliente(ClienteModel cliente) {
-            ClienteModel clienteAtt = await clienteRepositorio.AdicionarCliente(cliente);
-            return Ok(clienteAtt);
+        [HttpDelete("Id")]
 
+        public async Task<ActionResult<ClienteDto>> Deletar(int id) {
+            bool apagado = await clienteRepositorio.DeletarCliente(id);
+            return Ok(apagado);
         }
-
     }
 }

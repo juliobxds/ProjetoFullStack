@@ -10,7 +10,6 @@ namespace ProjetoFullStack.Data
             : base(options)
         {
         }
-
         public DbSet<ClienteModel> Clientes { get; set; }
         public DbSet<EnderecoModel> Enderecos { get; set; }
 

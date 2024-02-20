@@ -31,23 +31,23 @@ namespace ProjetoFullStack.Migrations
                     NomeDaRua = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
                     NumeroDaRua = table.Column<string>(type: "TEXT", nullable: false),
                     Bairro = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    ClienteModelId = table.Column<int>(type: "INTEGER", nullable: false)
+                    IdCliente = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enderecos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Enderecos_Clientes_ClienteModelId",
-                        column: x => x.ClienteModelId,
+                        name: "FK_Enderecos_Clientes_IdCliente",
+                        column: x => x.IdCliente,
                         principalTable: "Clientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enderecos_ClienteModelId",
+                name: "IX_Enderecos_IdCliente",
                 table: "Enderecos",
-                column: "ClienteModelId",
+                column: "IdCliente",
                 unique: true);
         }
 

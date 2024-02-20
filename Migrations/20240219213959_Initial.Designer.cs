@@ -8,7 +8,7 @@ using ProjetoFullStack.Data;
 namespace ProjetoFullStack.Migrations
 {
     [DbContext(typeof(PFSDBContext))]
-    [Migration("20240210005021_Initial")]
+    [Migration("20240219213959_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,7 +59,7 @@ namespace ProjetoFullStack.Migrations
 
                     b.Property<int>("ClienteModelId")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("ClienteModelId");
+                        .HasColumnName("IdCliente");
 
                     b.Property<string>("NomeDaRua")
                         .IsRequired()

@@ -11,7 +11,7 @@ namespace ProjetoFullStack.Data.Map
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(128);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(128);
             builder.Property(x => x.Celular).IsRequired().HasMaxLength(128);
-            builder.HasOne(cliente => cliente.Endereco).WithOne(x => x.Cliente).HasForeignKey<EnderecoModel>(x => x.ClienteModelId);
+            builder.HasOne(x => x.Endereco).WithOne(x => x.Cliente).HasForeignKey<EnderecoModel>(x => x.ClienteModelId);
         }
     }
 }
