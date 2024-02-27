@@ -9,7 +9,7 @@ namespace ProjetoFullStack.Repositorios.Interfaces {
         Task<List<ClienteDto>> BuscarTodosClientes();
         Task<ClienteDto> BuscarClientePorId(int id); // buscar usuario por Id
         Task<ClienteDto> AdicionarCliente(ClienteDto cliente);
-        Task<ClienteModel> AtualizarCliente(ClienteDto cliente, int id);
+        Task<ClienteDto> AtualizarCliente(ClienteDto cliente);
         Task<bool> DeletarCliente(int id);
     }
 }

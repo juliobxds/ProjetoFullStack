@@ -49,9 +49,9 @@ C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\staticwebassets\Pro
 C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\staticwebassets\ProjetoFullStack.StaticWebAssets.xml
 C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\scopedcss\bundle\ProjetoFullStack.styles.css
 C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\ProjetoFullStack.RazorTargetAssemblyInfo.cache
-C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\ProjetoF.20860376.Up2Date
 C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\ProjetoFullStack.dll
-C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\refint\ProjetoFullStack.dll
 C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\ProjetoFullStack.pdb
 C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\ProjetoFullStack.genruntimeconfig.cache
 C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\ref\ProjetoFullStack.dll
+C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\ProjetoF.20860376.Up2Date
+C:\Users\55219\Desktop\PFS\ProjetoFullStack\obj\Debug\net5.0\refint\ProjetoFullStack.dll

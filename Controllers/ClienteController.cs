@@ -33,9 +33,8 @@ namespace ProjetoFullStack.Controllers {
         }
 
         [HttpPut("Atualizar")]
-        public async Task<ActionResult<ClienteDto>> Atualizar([FromBody] ClienteDto cliente, int id) {
-            ClienteModel clienteAtt = await clienteRepositorio.AtualizarCliente(cliente, id);
-            return Ok(cliente);
+        public async Task<ActionResult<ClienteDto>> Atualizar([FromBody] ClienteDto cliente) {
+            return Ok(await clienteRepositorio.AtualizarCliente(cliente));
         }
 
         [HttpDelete("Id")]

@@ -32,12 +32,15 @@ namespace ProjetoFullStack.Repositorios {
                 clienteDto.Id = clienteModel.Id;
                 clienteDto.Nome = clienteModel.Nome;
                 clienteDto.Email = clienteModel.Email;
+                clienteDto.Celular = clienteModel.Celular;
                 clienteDto.EnderecoDto = new EnderecoDto();
 
                 if (clienteModel.Endereco != null) {
                     clienteDto.EnderecoDtoId = clienteModel.Endereco.Id;
                     clienteDto.EnderecoDto.Id = clienteModel.Endereco.Id;
                     clienteDto.EnderecoDto.NomeDaRua = clienteModel.Endereco.NomeDaRua;
+                    clienteDto.EnderecoDto.NumeroDaRua = clienteModel.Endereco.NumeroDaRua;
+                    clienteDto.EnderecoDto.Bairro = clienteModel.Endereco.Bairro;
                     clienteDto.EnderecoDto.ClienteDtoId = clienteModel.Id;
                 }
 
@@ -48,19 +51,25 @@ namespace ProjetoFullStack.Repositorios {
         }
         public async Task<ClienteDto> BuscarClientePorId(int id) {
             var clienteModel = await _context.Clientes.Include(x => x.Endereco).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id); // método lambda para criar uma condiçao!!
-
             var clienteDto = new ClienteDto();
-            clienteDto.Id = clienteModel.Id;
-            clienteDto.Nome = clienteModel.Nome;
-            clienteDto.Email = clienteModel.Email;
-            clienteDto.EnderecoDto = new EnderecoDto();
 
-            if (clienteModel.Endereco != null) {
-                clienteDto.EnderecoDtoId = clienteModel.Endereco.Id;
-                clienteDto.EnderecoDto.Id = clienteModel.Endereco.Id;
-                clienteDto.EnderecoDto.NomeDaRua = clienteModel.Endereco.NomeDaRua;
-                clienteDto.EnderecoDto.ClienteDtoId = clienteModel.Id;
+            if (clienteModel != null) {
+                clienteDto.Id = clienteModel.Id;
+                clienteDto.Nome = clienteModel.Nome;
+                clienteDto.Email = clienteModel.Email;
+                clienteDto.Celular = clienteModel.Celular;
+                clienteDto.EnderecoDto = new EnderecoDto();
+
+                if (clienteModel.Endereco != null) {
+                    clienteDto.EnderecoDtoId = clienteModel.Endereco.Id;
+                    clienteDto.EnderecoDto.Id = clienteModel.Endereco.Id;
+                    clienteDto.EnderecoDto.NomeDaRua = clienteModel.Endereco.NomeDaRua;
+                    clienteDto.EnderecoDto.NumeroDaRua  = clienteModel.Endereco.NumeroDaRua;
+                    clienteDto.EnderecoDto.Bairro = clienteModel.Endereco.Bairro;
+                    clienteDto.EnderecoDto.ClienteDtoId = clienteModel.Id;
+                }
             }
+            
             return clienteDto;
         }
         public async Task<ClienteDto> AdicionarCliente(ClienteDto cliente) {
@@ -72,7 +81,6 @@ namespace ProjetoFullStack.Repositorios {
                     NomeDaRua = cliente.EnderecoDto.NomeDaRua,
                     NumeroDaRua = cliente.EnderecoDto.NumeroDaRua,
                     Bairro = cliente.EnderecoDto.Bairro,
-                    Id = cliente.EnderecoDto.Id
                 }
             };
 
@@ -87,22 +95,28 @@ namespace ProjetoFullStack.Repositorios {
             };
             return clienteResposta;
         }
-        public async Task<ClienteModel> AtualizarCliente(ClienteDto cliente, int id) {
-            //var clientePorId = await BuscarClientePorId(id);
-            //if (clientePorId != null) {
-            //    throw new Exception($"Cliente Para o ID:{id} não foi encontrado");
-            //}
-            //cliente.Id = cliente.Id;
-            //cliente.Nome = cliente.Nome;
-            //cliente.Email = cliente.Email;
-            //cliente.Celular = cliente.Celular;
+        public async Task<ClienteDto> AtualizarCliente(ClienteDto cliente) {
 
-            //_context.Clientes.Update(clientePorId);
-            //await _context.SaveChangesAsync();
+            var clienteDtoBanco = await BuscarClientePorId(cliente.Id) ?? throw new Exception($"Cliente Para o ID:{cliente.Id} não foi encontrado");
 
-            //return clientePorId;
-            throw new System.NotImplementedException();
+            ClienteModel clienteModel = new ClienteModel() {
+                Id = clienteDtoBanco.Id,
+                Nome = clienteDtoBanco.Nome,
+                Celular = clienteDtoBanco.Celular,
+                Email = clienteDtoBanco.Email,
+                EnderecoModelId = clienteDtoBanco.EnderecoDtoId,
+                Endereco = new EnderecoModel() {
+                    Id = clienteDtoBanco.EnderecoDto.Id,
+                    NomeDaRua = clienteDtoBanco.EnderecoDto.NomeDaRua,
+                    NumeroDaRua = clienteDtoBanco.EnderecoDto.NumeroDaRua,
+                    Bairro = clienteDtoBanco.EnderecoDto.Bairro, 
+                    ClienteModelId = clienteDtoBanco.EnderecoDto.ClienteDtoId,
+                }
+            }; 
+            _context.Clientes.Update(clienteModel);
+            await _context.SaveChangesAsync(); // automapper prox passo!!
 
+            return clienteDtoBanco;
 
         }
         public async Task<bool> DeletarCliente(int id) {
@@ -115,11 +129,8 @@ namespace ProjetoFullStack.Repositorios {
 
             _context.Clientes.Remove(clienteModel);
 
-
             await _context.SaveChangesAsync();
             return true;
-            throw new System.NotImplementedException();
-
         }
     }
 }
